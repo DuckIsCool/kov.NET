@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
@@ -47,11 +48,26 @@ namespace kov.NET.Protections
 
             Console.WriteLine($"  Encrypted {Amount} strings.");
         }
-
+        private const string Key = "Ta284WGc29asWL2F";
+        private const string IV = "h6iAm3fHwFdVbuIH";
         private static string Encrypt(string str)
         {
+            byte[] textbytes = ASCIIEncoding.ASCII.GetBytes(str);
+            AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
+            encdec.BlockSize = 128;
+            encdec.KeySize = 256;
+            encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
+            encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
+            encdec.Padding = PaddingMode.PKCS7;
+            encdec.Mode = CipherMode.CBC;
 
-            char[] charArray = str.ToCharArray();
+            ICryptoTransform icrypt = encdec.CreateEncryptor(encdec.Key, encdec.IV);
+
+            byte[] enc = icrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
+            icrypt.Dispose();
+
+            string a = Convert.ToBase64String(enc);
+            char[] charArray = a.ToCharArray();
             Array.Reverse(charArray);
             return new string(charArray);
         }
