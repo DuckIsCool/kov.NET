@@ -3,6 +3,6 @@ a .NET obfuscator made in dnlib. thanks to LoGiC.NET for the renaming and inject
 modded LoGiC.NET
 
 
-or learning purposes only ;)
+for learning purposes only ;)
 
 unpacker @ https://github.com/miso-xyz/DuckiKov
