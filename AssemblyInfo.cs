@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("kov.NET")]
 [assembly: AssemblyDescription("A free and open-source complex .NET obfuscator using dnlib.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("B3RAP Softwares")]
+[assembly: AssemblyCompany("shhhhh")]
 [assembly: AssemblyProduct("kov.NET")]
 [assembly: AssemblyCopyright("© Duck! 2020")]
 [assembly: AssemblyTrademark("ducks are pretty cool.")]
