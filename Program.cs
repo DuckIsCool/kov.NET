@@ -56,7 +56,7 @@ namespace kov.NET
 
 
             Console.WriteLine("Saving file...");
-            var pathez = $"{path}{Path.GetFileNameWithoutExtension(path)}-kov.exe";
+            var pathez = $"{Path.GetFileNameWithoutExtension(path)}-kov.exe";
             ModuleWriterOptions opts = new ModuleWriterOptions(Module) { Logger = DummyLogger.NoThrowInstance };
             Module.Write(pathez, opts);
 
