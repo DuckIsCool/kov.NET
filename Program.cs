@@ -51,10 +51,6 @@ namespace kov.NET
             L2F.Execute();
 
 
-            Console.WriteLine("Injecting AntiDe4Dot...");
-            AntiDe4Dot.Execute();
-
-
             Console.WriteLine("Saving file...");
             var pathez = $"{Path.GetFileNameWithoutExtension(path)}-kov.exe";
             ModuleWriterOptions opts = new ModuleWriterOptions(Module) { Logger = DummyLogger.NoThrowInstance };
