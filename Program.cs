@@ -3,7 +3,6 @@ using System.IO;
 using dnlib.DotNet;
 using dnlib.DotNet.Writer;
 using kov.NET.Protections;
-using SharpConfigParser;
 using kov.NET.Utils;
 
 namespace kov.NET
