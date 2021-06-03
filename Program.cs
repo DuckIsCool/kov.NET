@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using dnlib.DotNet;
 using dnlib.DotNet.Writer;
@@ -11,6 +11,7 @@ namespace kov.NET
     class Program
     {
         public static ModuleDefMD Module { get; set; }
+        public ModuleDef ManifestModule;
 
         public static string FileExtension { get; set; }
 
@@ -27,26 +28,27 @@ namespace kov.NET
             Module = ModuleDefMD.Load(path);
             FileExtension = Path.GetExtension(path);
 
+            Console.WriteLine("Encrypting strings...");
+            StringEncryption.Execute();
+
             Console.WriteLine("Renaming...");
             Renamer.Execute();
 
+
+            Console.WriteLine("Injecting ints...");
+            AddInteger.Execute();
 
 
             Console.WriteLine("Encoding ints...");
             IntEncoding.Execute();
 
-            Console.WriteLine("Encrypting strings...");
-            StringEncryption.Execute();
-
-
-            Console.WriteLine("Injecting local to fields...");
-            L2F.Execute();
-
-
+            
             Console.WriteLine("Injecting ControlFlow...");
             ControlFlow.Execute();
 
 
+            Console.WriteLine("Injecting local to fields...");
+            L2F.Execute();
 
 
             Console.WriteLine("Saving file...");
