@@ -5,4 +5,4 @@ modded LoGiC.NET
 
 for learning purposes only ;)
 
-unpacker @ https://github.com/miso-xyz/DuckiKov (outdated)
+unpacker @ https://github.com/miso-xyz/DuckiKov
