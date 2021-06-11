@@ -40,7 +40,7 @@ namespace kov.NET.Protections
                 FieldDef def = null;
                 if (!convertedLocals.ContainsKey(local))
                 {
-                    def = new FieldDefUser(RandomString(+600), new FieldSig(local.Type), FieldAttributes.Public | FieldAttributes.Static);
+                    def = new FieldDefUser(RandomString(+30), new FieldSig(local.Type), FieldAttributes.Public | FieldAttributes.Static);
                     Module.GlobalType.Fields.Add(def);
                     convertedLocals.Add(local, def);
                 }

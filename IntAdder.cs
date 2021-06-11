@@ -1,4 +1,4 @@
-using dnlib.DotNet;
+﻿using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,8 @@ namespace kov.NET
 {
     public class AddInteger
     {
+
+
         public static void Execute()
         {
             foreach (TypeDef type in Program.Module.GetTypes())
@@ -33,7 +35,7 @@ namespace kov.NET
                             methodDef2.Body.Instructions.Insert(i + 6, Instruction.Create(OpCodes.Sub));
                             methodDef2.Body.Instructions.Insert(i + 7, Instruction.Create(OpCodes.Sizeof, methodDef2.Module.Import(typeof(bool))));
                             methodDef2.Body.Instructions.Insert(i + 8, Instruction.Create(OpCodes.Add));
-                            methodDef2.Body.Instructions.Insert(i + 9, Instruction.Create(OpCodes.Ldc_R8, Math.PI / randomuint));
+                            methodDef2.Body.Instructions.Insert(i + 9, Instruction.Create(OpCodes.Ldc_R8, randomuint ^ randomuint));
                             methodDef2.Body.Instructions.Insert(i + 10, Instruction.Create(OpCodes.Call, methodDef2.Module.Import(typeof(Math).GetMethod("Cos", new System.Type[] { typeof(double) }))));
                             methodDef2.Body.Instructions.Insert(i + 11, Instruction.Create(OpCodes.Conv_I4));
                             methodDef2.Body.Instructions.Insert(i + 12, Instruction.Create(OpCodes.Sub));

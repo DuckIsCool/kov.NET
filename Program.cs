@@ -30,28 +30,43 @@ namespace kov.NET
             Console.WriteLine("Encrypting strings...");
             StringEncryption.Execute();
 
-            Console.WriteLine("Renaming...");
-            Renamer.Execute();
 
 
-            Console.WriteLine("Adding ints...");
-            AddInteger.Execute();
+           Console.WriteLine("Renaming...");
+           Renamer.Execute();
 
 
-            Console.WriteLine("Encoding ints...");
-            IntEncoding.Execute();
+           Console.WriteLine("Adding ints...");
+           AddInteger.Execute();
+
+
+           Console.WriteLine("Encoding ints...");
+           IntEncoding.Execute();
 
             
-            Console.WriteLine("Injecting ControlFlow...");
-            ControlFlow.Execute();
+           Console.WriteLine("Injecting ControlFlow...");
+           ControlFlow.Execute();
 
 
-            Console.WriteLine("Injecting local to fields...");
-            L2F.Execute();
+           Console.WriteLine("Injecting local to fields...");
+           L2F.Execute();
+
+
+           Console.WriteLine("Adding Proxys...");
+           ProxyInts.Execute();
+
+
+           Console.WriteLine("Injecting AntiDe4Dot...");
+           AntiDe4Dot.Execute();
+
+
+
+
+
 
 
             Console.WriteLine("Saving file...");
-            var pathez = $"{Path.GetFileNameWithoutExtension(path)}-kov.exe";
+            var pathez = $"{path}-kov.exe";
             ModuleWriterOptions opts = new ModuleWriterOptions(Module) { Logger = DummyLogger.NoThrowInstance };
             Module.Write(pathez, opts);
 

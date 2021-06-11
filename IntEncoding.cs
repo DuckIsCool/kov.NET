@@ -47,11 +47,15 @@ namespace kov.NET.Protections
                             method.Body.Instructions.Insert(i + 11, Instruction.Create(OpCodes.Add));
                             method.Body.Instructions.Insert(i + 12, nop);
                             i += 12;
+
                         }
+
                         method.Body.SimplifyBranches();
                     }
                 }
+
             }
+
         }
     }
 }

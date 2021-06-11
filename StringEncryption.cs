@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -34,42 +34,52 @@ namespace kov.NET.Protections
                 if (type.IsGlobalModuleType) continue;
                 foreach (MethodDef method in type.Methods)
                 {
+                    var cryptoRandom = new CryptoRandom();
                     if (!method.HasBody) continue;
                     for (int i = 0; i < method.Body.Instructions.Count; i++)
                         if (method.Body.Instructions[i].OpCode == OpCodes.Ldstr)
                         {
-                            string operand = method.Body.Instructions[i].Operand.ToString();
-                            method.Body.Instructions[i].Operand = Encrypt(operand);
-                            method.Body.Instructions.Insert(i + 1, OpCodes.Call.ToInstruction(init));
-                            ++Amount;
+                            var key = method.Name.Length + Next();
+
+                            var encryptedString =
+                                Encrypt(new Tuple<string, int>(method.Body.Instructions[i].Operand.ToString(), key));
+
+                            method.Body.Instructions[i].OpCode = OpCodes.Ldstr;
+                            method.Body.Instructions[i].Operand = encryptedString;
+                            method.Body.Instructions.Insert(i + 1, OpCodes.Ldc_I4.ToInstruction(key));
+                            method.Body.Instructions.Insert(i + 2, OpCodes.Call.ToInstruction(init));
+                            Amount++;
+                            i += 2;
                         }
                 }
             }
 
             Console.WriteLine($"  Encrypted {Amount} strings.");
         }
-        private const string Key = "Ta284WGc29asWL2F";
-        private const string IV = "h6iAm3fHwFdVbuIH";
-        private static string Encrypt(string str)
+        public static int Next()
         {
-            byte[] textbytes = ASCIIEncoding.ASCII.GetBytes(str);
-            AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
-            encdec.BlockSize = 128;
-            encdec.KeySize = 256;
-            encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
-            encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
-            encdec.Padding = PaddingMode.PKCS7;
-            encdec.Mode = CipherMode.CBC;
-
-            ICryptoTransform icrypt = encdec.CreateEncryptor(encdec.Key, encdec.IV);
-
-            byte[] enc = icrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
-            icrypt.Dispose();
-
-            string a = Convert.ToBase64String(enc);
-            char[] charArray = a.ToCharArray();
-            Array.Reverse(charArray);
-            return new string(charArray);
+            return BitConverter.ToInt32(RandomBytes(sizeof(int)), 0);
+        }
+        private static readonly RandomNumberGenerator csp = RandomNumberGenerator.Create();
+        private static byte[] RandomBytes(int bytes)
+        {
+            byte[] buffer = new byte[bytes];
+            csp.GetBytes(buffer);
+            return buffer;
+        }
+        public static string Encrypt(Tuple<string, int> values)
+        {
+            StringBuilder input = new StringBuilder(values.Item1);
+            StringBuilder output = new StringBuilder(values.Item1.Length);
+            char Textch;
+            int key = values.Item2;
+            for (int iCount = 0; iCount < values.Item1.Length; iCount++)
+            {
+                Textch = input[iCount];
+                Textch = (char)(Textch ^ key);
+                output.Append(Textch);
+            }
+            return output.ToString();
         }
     }
 }
