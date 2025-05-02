@@ -6,3 +6,7 @@ modded LoGiC.NET
 for learning purposes only ;)
 
 unpacker @ https://github.com/miso-xyz/DuckiKov (outdated)
+
+
+
+i made this when i was 14, i dont recommend using this.
